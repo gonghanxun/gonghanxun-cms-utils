@@ -8,14 +8,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.gonghanxun.cms.utils.TestBinry;
 
 public class TestBinry {
-
 	public static void main(String[] args) {
 		new HashMap<>();
 		
-		int a = 12; // 10 杩涘埗
-		int b = 012;//   8杩涘埗   2 + 8X1 
-		int c = 0x12; // 16杩涘埗    2 + 16X1
-		int d = 0b1101;// 浜岃繘鍒�
+		int a = 12; // 10 进制
+		int b = 012;//   8进制   2 + 8X1 
+		int c = 0x12; // 16进制    2 + 16X1
+		int d = 0b1101;// 二进制
 		System.out.println("  a " + a);//123
 		System.out.println("  b " + b); // 
 		System.out.println("  c " + c);
@@ -29,7 +28,9 @@ public class TestBinry {
 		t1.test2();
 		
 		t2.test1();
-		
+		//Math.random(0.12);
+		//Math.ron
+		/*
 		ArrayList<Object> arrayList = new ArrayList<Object>();
 		arrayList.add("");
 		new Vector();
@@ -37,7 +38,7 @@ public class TestBinry {
 		HashMap<Object, Object> hashMap = new HashMap<>();
 		
 		hashMap.put("aa", "fff");
-		new ConcurrentHashMap<>();
+		new ConcurrentHashMap<>();*/
 		
 		
 		
@@ -59,4 +60,5 @@ public class TestBinry {
 	public synchronized void test2() {
 		
 	}
+
 }

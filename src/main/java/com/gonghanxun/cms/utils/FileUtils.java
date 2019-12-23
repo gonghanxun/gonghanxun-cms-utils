@@ -16,9 +16,15 @@ import java.util.Properties;
 import org.apache.commons.codec.digest.DigestUtils;
 
 public class FileUtils {
-public static synchronized String getSuffixName(String fileName) {
+
+	/**
+	 * 获取文件的扩展名
+	 * 
+	 * @param String fileName
+	 */
+	public static synchronized String getSuffixName(String fileName) {
 		
-		//鑾峰彇鏈�鍚庝竴涓偣鐨勪綅缃�
+		//获取最后一个点的位置
 		int dotPos = fileName.lastIndexOf('.');
 		if(dotPos<0)
 			return "";
@@ -34,38 +40,38 @@ public static synchronized String getSuffixName(String fileName) {
 		
 		File file = new File(fileName);
 		
-		// 鑾峰彇鏂囦欢鐨勫垎闅旂鍙�
+		// 获取文件的分隔符号
 		String fileSeperator = getProperty("file.separator");
 		
 		
 		
-		//鏂囦欢涓嶅瓨鍦�
+		//文件不存在
 		if(!file.exists())
 			return ;
 		
-		// 濡傛灉鏄洰褰�
+		// 如果是目录
 		if(file.isDirectory()) {
-			//閫掑綊鍒犻櫎瀛愮洰褰曟垨鑰呮枃浠�
+			//递归删除子目录或者文件
 			String[] list = file.list();
 			for (int i = 0; i < list.length; i++) {
 				String childFileName = fileName+ fileSeperator + list[i];
 				delFile(childFileName);
 			}
 		}
-		// 濡傛灉鏄枃浠� 鎴栬�呭垹闄ゅ瓙鐩綍涔嬪悗 鍒犻櫎鏈韩
+		// 如果是文件 或者删除子目录之后 删除本身
 		file.delete();
 		
 	}
 	
 	/**
-	 * 鏍规嵁灞炴�ey 鑾峰彇绯荤粺鐜鍙橀噺鍊�
+	 * 根据属性key 获取系统环境变量值
 	 * @param key
 	 * @return
 	 */
 	public static String getProperty(String key) {
 		
 		Properties properties = System.getProperties();
-		/*//鑾峰彇鐜鍙橀噺
+		/*//获取环境变量
 		//System.getenv();
 		
 		//ArrayList<String> arrayList = new ArrayList<String>();
@@ -80,7 +86,7 @@ public static synchronized String getSuffixName(String fileName) {
 	} 
 	
 	/**
-	 * 鑾峰彇绯荤粺鐨勭幆澧冨彉閲�
+	 * 获取系统的环境变量
 	 * @param key
 	 * @return
 	 */
@@ -95,7 +101,7 @@ public static synchronized String getSuffixName(String fileName) {
 	}
 	
 	/**
-	 * 鑾峰彇鏂囦欢鐨勫ぇ灏�
+	 * 获取文件的大小
 	 * @param fileName
 	 * @return
 	 */
@@ -109,9 +115,9 @@ public static synchronized String getSuffixName(String fileName) {
 	}
 	
 	/**
-	 *  姣旇緝涓や釜涓や釜鏂囦欢鏋跺唴瀹规槸鍚︾浉鍚�
-	 * @param src  鍘熺洰褰�
-	 * @param dst  鐩爣鐩綍
+	 *  比较两个两个文件架内容是否相同
+	 * @param src  原目录
+	 * @param dst  目标目录
 	 * @throws IOException 
 	 * @throws FileNotFoundException 
 	 */
@@ -120,36 +126,36 @@ public static synchronized String getSuffixName(String fileName) {
 		 File srcFile = new File(src);// 
 		 File dstFile = new File(dst);//
 		 if(!srcFile.exists()) {
-			 System.out.println(" 婧愭枃浠� 涓嶅瓨鍦�  "  + src);
+			 System.out.println(" 源文件 不存在  "  + src);
 			 return;
 		 }
 		 
 		 if(!dstFile.exists()) {
-			 System.out.println(" 鐩爣鏂囦欢 涓嶅瓨鍦�  "  + dst);
+			 System.out.println(" 目标文件 不存在  "  + dst);
 			 return;
 		 }
 		 if(srcFile.isFile() && dstFile.isFile()) {
 			 if(srcFile.length() != dstFile.length()) {
-				 System.out.println(" 鏂囦欢闀垮害涓嶄竴鑷�" + src);
+				 System.out.println(" 文件长度不一致" + src);
 			 }else {
 				 byte[] md5Src = DigestUtils.md5(new FileInputStream(srcFile));
 				 byte[] md5Dst = DigestUtils.md5(new FileInputStream(dstFile));
 				 String strMd5Src = new String(md5Src);
 				 String strMd5Dst = new String(md5Dst);
 				 if(!strMd5Src.equals(strMd5Dst)) {
-					 System.out.println(" 鏂囦欢鍐呭涓嶄竴鑷�  " +  src);
+					 System.out.println(" 文件内容不一致  " +  src);
 				 }
 			 }
 			 return ;
 		 }
 		 
 		 if(srcFile.isDirectory()) {
-			 // 閫掑綊锛� 閬嶅巻
+			 // 递归， 遍历
 			 String[] list = srcFile.list();
 			 for (int i = 0; i < list.length; i++) {
-				 //婧愭枃浠剁殑瀛愭枃浠惰矾寰�
+				 //源文件的子文件路径
 				 String childSrcFile = src + "\\" + list[i];
-				//鐩爣鏂囦欢鐨勫瓙鏂囦欢璺緞
+				//目标文件的子文件路径
 				 String childDstFile = dst + "\\" + list[i];
 				 comparePath(childSrcFile,childDstFile);
 			}
@@ -166,18 +172,18 @@ public static synchronized String getSuffixName(String fileName) {
 	 */
 	public static String read(String fileName) throws IOException {
 		
-		//鐢ㄤ簬瀛樺偍鏂囦欢鍐呭
+		//用于存储文件内容
 		StringBuilder sb = new StringBuilder();
 		
-		// 鍒涘缓鏂囦欢瀵硅薄
+		// 创建文件对象
 		File file = new File(fileName);
 		
-		//鍒涘缓鏂囦欢杈撳叆娴�
+		//创建文件输入流
 		FileInputStream fis = new FileInputStream(file);
-		// 鍒涘缓缂撳啿娴�
+		// 创建缓冲流
 		BufferedReader br = new BufferedReader(new InputStreamReader(fis,"GBK"));
 		String ln=null;
-		//鎸夎璇诲叆
+		//按行读入
 		while ((ln= br.readLine())!=null) {
 			sb.append(ln);
 		}
@@ -188,20 +194,26 @@ public static synchronized String getSuffixName(String fileName) {
 	}
 	
 	
+	/**
+	 * 
+	 * @param file
+	 * @return
+	 * @throws IOException 
+	 */
 	public static List<String> readByLines(String fileName) throws IOException {
 		
-		//鐢ㄤ簬瀛樺偍鏂囦欢鍐呭
+		//用于存储文件内容
 		List<String> lines = new ArrayList();
 		
-		// 鍒涘缓鏂囦欢瀵硅薄
+		// 创建文件对象
 		File file = new File(fileName);
 		
-		//鍒涘缓鏂囦欢杈撳叆娴�
+		//创建文件输入流
 		FileInputStream fis = new FileInputStream(file);
-		// 鍒涘缓缂撳啿娴�
+		// 创建缓冲流
 		BufferedReader br = new BufferedReader(new InputStreamReader(fis,"UTF-8"));
 		String ln=null;
-		//鎸夎璇诲叆
+		//按行读入
 		while ((ln= br.readLine())!=null) {
 			//sb.append(ln);
 			lines.add(ln);
@@ -213,6 +225,12 @@ public static synchronized String getSuffixName(String fileName) {
 	}
 	
 	
+	
+	/**
+	 *  关闭流
+	 * @param stream
+	 * @throws IOException 
+	 */
 	public static void closeStream(Closeable ... stream) throws IOException {
 		
 		for (int i = 0; i < stream.length; i++) {
@@ -220,8 +238,14 @@ public static synchronized String getSuffixName(String fileName) {
 		}
 	}
 	
+	/**
+	 * 复制文件
+	 * @param srcFile  源文件
+	 * @param dstFile  目标文件
+	 * @throws IOException 
+	 */
 	public synchronized static void copy(String srcFileName ,String dstFileName) throws IOException {
-		// 婧愭枃浠�
+		// 源文件
 		File srcFile = new File(srcFileName);
 		File dstFile = new File(dstFileName);
 		
