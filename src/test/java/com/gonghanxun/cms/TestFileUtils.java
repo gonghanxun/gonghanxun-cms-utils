@@ -45,9 +45,9 @@ public class TestFileUtils {
 	@Test
 	public void testReadLines() throws IOException {
 		
-		List<String> lines = FileUtils.readByLines("D:\\project\\07b - 鍓湰\\"
-				+ "src\\main\\java\\test\\com\\zhu"
-				+ "zg\\unit15\\TestJoinTest.java");
+		List<String> lines = FileUtils.readByLines("D:\\2019\\cms\\day2.7\\src\\main\\java"
+				+ "\\com\\gonghanxun\\controller"
+				+ "\\UserController.java");
 		
 		lines.forEach(x->{System.out.println(" x is " + x);});
 	}
@@ -55,8 +55,9 @@ public class TestFileUtils {
 	
 	@Test
 	public void testCopy() throws IOException {
-		String src="D:\\project\\07b\\07b.zip";
-		String dst="D:\\project\\07b\\07b2.zip";
+		String src="‪H:\\nginx-1.16.1.zip";
+		String dst="‪H:\\nginx-1.16.12.zip";
+
 		FileUtils.copy(src,dst );
 	} 
 }
